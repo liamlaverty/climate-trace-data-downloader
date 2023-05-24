@@ -1,5 +1,4 @@
-sector_packages/*
-country_packages/*
+data_packages/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
