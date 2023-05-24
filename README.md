@@ -1,2 +1,2 @@
-# open-climate-data-downloader
+# Open Climate Data Downloader
 An application that downloads climate related data
