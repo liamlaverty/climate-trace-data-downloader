@@ -1,6 +1,16 @@
 class countrylists:
     country_three_char_list = country_list = [
         {
+            "name": "Norway",
+            "alpha-3": "NOR",
+            "country-code": "578"
+        },
+        {
+            "name": "United Kingdom of Great Britain and Northern Ireland",
+            "alpha-3": "GBR",
+            "country-code": "826"
+        },
+        {
             "name": "Afghanistan",
             "alpha-3": "AFG",
             "country-code": "004"
@@ -831,11 +841,6 @@ class countrylists:
             "country-code": "580"
         },
         {
-            "name": "Norway",
-            "alpha-3": "NOR",
-            "country-code": "578"
-        },
-        {
             "name": "Oman",
             "alpha-3": "OMN",
             "country-code": "512"
@@ -1169,11 +1174,6 @@ class countrylists:
             "name": "United Arab Emirates",
             "alpha-3": "ARE",
             "country-code": "784"
-        },
-        {
-            "name": "United Kingdom of Great Britain and Northern Ireland",
-            "alpha-3": "GBR",
-            "country-code": "826"
         },
         {
             "name": "United States of America",

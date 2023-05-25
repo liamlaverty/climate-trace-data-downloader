@@ -13,7 +13,7 @@ class FileDownloader:
         request = requests.get(url, allow_redirects=True, stream=True)
 
         if request.ok:
-            print(f'saving to {os.path.abspath(file_path)}')
+            print(f'downloading to {os.path.abspath(file_path)}')
 
             with open(file_path, 'wb') as f:
                 for chunk in request.iter_content(chunk_size=1024 * 8):
