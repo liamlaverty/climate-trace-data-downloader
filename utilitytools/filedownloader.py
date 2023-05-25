@@ -21,6 +21,8 @@ class FileDownloader:
                         f.write(chunk)
                         f.flush()
                         os.fsync(f.fileno())
+            return os.path.abspath(file_path)
         else:
             print(f'Status:{request.status_code, request.text}. Failed to download {url} to {file_path}')
+        
     
