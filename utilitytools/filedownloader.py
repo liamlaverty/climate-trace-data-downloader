@@ -9,7 +9,10 @@ class FileDownloader:
             os.makedirs(destFilePath)
 
         file_path = os.path.join(destFilePath, destFileName)
-
+        if os.path.isfile(file_path):
+            print(f'skipping file (already exists), [{file_path}]')
+            return
+        
         request = requests.get(url, allow_redirects=True, stream=True)
 
         if request.ok:
