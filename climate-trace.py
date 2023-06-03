@@ -80,7 +80,7 @@ class ClimateTraceDataDownloader:
             Zipper.unzip_file(os.path.join(directory_src_path, file))
 
 
-    def download_country_level_forest_data( self, dest_path:str, top_n_countries: int = -1):
+    def download_country_level_forest_data( self, dest_path:str):
         """
         Downloads country level data from climate trace for forest sectors
         """
@@ -91,12 +91,9 @@ class ClimateTraceDataDownloader:
             # download the forest-sectors data first, then the forest data sectors
             file_url = f'https://downloads.climatetrace.org/country_packages/forest/{country["alpha-3"]}.zip'
             FileDownloader.download_file(file_url, dest_path, f'{country["alpha-3"]}.zip')
-            if top_n_countries > 0:
-                if i >= top_n_countries:
-                    return
 
 
-    def download_country_level_non_forest_data( self, dest_path:str, top_n_countries: int = -1):
+    def download_country_level_non_forest_data( self, dest_path:str):
         """
         Downloads country level data from climate trace for non-forest sectors
         """
@@ -107,21 +104,15 @@ class ClimateTraceDataDownloader:
             # download the non-forest-sectors data first, then the forest data sectors
             file_url = f'https://downloads.climatetrace.org/country_packages/non_forest_sectors/{country["alpha-3"]}.zip'
             FileDownloader.download_file(file_url, dest_path, f'{country["alpha-3"]}.zip')
-            if top_n_countries > 0:
-                if i >= top_n_countries:
-                    return
 
 
-    def download_sector_level_data(self, dest_path:str, top_n_filesets = -1):
+    def download_sector_level_data(self, dest_path:str):
         """
         Downloads sector level data from climate trace
         """
 
         for i, file in enumerate(climatetracedatalists.climate_trace_files_list):
             file = FileDownloader.download_file(f'https://downloads.climatetrace.org/{file["url"]}', dest_path, f'{file["destName"]}')
-            if top_n_filesets > 0:
-                if i >= top_n_filesets:
-                    return
 
 
 ctd = ClimateTraceDataDownloader()
