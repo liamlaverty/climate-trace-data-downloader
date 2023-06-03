@@ -34,11 +34,20 @@ class ClimateTraceDataDownloader:
         downloadForest = args.skipForestSectorDownload == False
         downloadNonForest = args.skipNonForestSectorDownload == False
         unzipFilesAfterDownload = args.skipUnzipFiles == False
+
+        all_country_list = countrylists.country_three_char_list
+
         if args.specifyCountries and len(args.specifyCountries) > 0:
-            countries = args.specifyCountries[0]
-            print(f'countries to download :{countries}')
+            country_list = args.specifyCountries[0]
+            for country_code in country_list:
+                if not any(country_code == country['alpha-3'] for country in all_country_list):
+                    raise Exception(f"The value '{country_code}' does not exist in the 'alpha-3' property")
+            print("All values exist in the 'alpha-3' property")
+            
         else:
-            print(f'configured to download all countries')
+            country_list = [country['alpha-3'] for country in all_country_list]
+
+        print(f'countries to download :{country_list}')
 
         print(f'dl international data:{downloadSectors}')
         print(f'dl national forest sectors:{downloadForest}')
@@ -58,12 +67,12 @@ class ClimateTraceDataDownloader:
             self.unzip_files(countries_dest_path)
 
         if downloadNonForest:
-            self.download_country_level_non_forest_data(non_forest_dest_path)
+            self.download_country_level_non_forest_data(non_forest_dest_path, country_list)
         if unzipFilesAfterDownload:
             self.unzip_files(non_forest_dest_path)
 
         if downloadForest:
-            self.download_country_level_forest_data(forest_dest_path)
+            self.download_country_level_forest_data(forest_dest_path, country_list)
         if unzipFilesAfterDownload:
             self.unzip_files(forest_dest_path)
 
@@ -80,30 +89,30 @@ class ClimateTraceDataDownloader:
             Zipper.unzip_file(os.path.join(directory_src_path, file))
 
 
-    def download_country_level_forest_data( self, dest_path:str):
+    def download_country_level_forest_data( self, dest_path:str, country_list):
         """
         Downloads country level data from climate trace for forest sectors
         """
 
-        for i, country in enumerate(countrylists.country_three_char_list):
+        for i, country in enumerate(country_list):
             # download file
             # https://downloads.climatetrace.org/country_packages/forest/AFG.zip
             # download the forest-sectors data first, then the forest data sectors
-            file_url = f'https://downloads.climatetrace.org/country_packages/forest/{country["alpha-3"]}.zip'
-            FileDownloader.download_file(file_url, dest_path, f'{country["alpha-3"]}.zip')
+            file_url = f'https://downloads.climatetrace.org/country_packages/forest/{country}.zip'
+            FileDownloader.download_file(file_url, dest_path, f'{country}.zip')
 
 
-    def download_country_level_non_forest_data( self, dest_path:str):
+    def download_country_level_non_forest_data( self, dest_path:str, country_list):
         """
         Downloads country level data from climate trace for non-forest sectors
         """
 
-        for i, country in enumerate(countrylists.country_three_char_list):
+        for i, country in enumerate(country_list):
             # download file
             # https://downloads.climatetrace.org/country_packages/non_forest_sectors/AFG.zip
             # download the non-forest-sectors data first, then the forest data sectors
-            file_url = f'https://downloads.climatetrace.org/country_packages/non_forest_sectors/{country["alpha-3"]}.zip'
-            FileDownloader.download_file(file_url, dest_path, f'{country["alpha-3"]}.zip')
+            file_url = f'https://downloads.climatetrace.org/country_packages/non_forest_sectors/{country}.zip'
+            FileDownloader.download_file(file_url, dest_path, f'{country}.zip')
 
 
     def download_sector_level_data(self, dest_path:str):

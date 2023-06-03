@@ -1,5 +1,5 @@
 class countrylists:
-    country_three_char_list = country_list = [
+    country_three_char_list = [
         {
             "name": "Norway",
             "alpha-3": "NOR",

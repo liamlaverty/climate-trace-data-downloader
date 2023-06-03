@@ -72,6 +72,11 @@ Once the download & unzipping are complete, a directory containing the following
   * When set, skips unzipping of the downloaded files
   * Usage: `python .\climate-trace.py --skipUnzipFiles`
 
+* `--specifyCountries`                
+  * array of strings, defaults to empty
+  * When set, only downloads specified countries
+  * Usage: `python .\climate-trace.py --specifyCountries GBR USA AFG`
+
 
 ## Requirements
 
