@@ -75,7 +75,10 @@ Once the download & unzipping are complete, a directory containing the following
 * `--specifyCountries`                
   * array of strings, defaults to empty
   * When set, only downloads specified countries
+  * Accepts an array of ISO-3166-1 alpha-3 countries (see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3)
+    * raises an exception if any invalid country is given as a param
   * Usage: `python .\climate-trace.py --specifyCountries GBR USA AFG`
+  * 
 
 
 ## Requirements
