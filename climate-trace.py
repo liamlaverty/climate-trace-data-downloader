@@ -20,6 +20,7 @@ class ClimateTraceDataDownloader:
         parser.add_argument('--skipForestSectorDownload', action=argparse.BooleanOptionalAction, help='Toggles downloading of country level forest sector data', required=False)
         parser.add_argument('--skipNonForestSectorDownload', action=argparse.BooleanOptionalAction, help='Toggles downloading of country level non-forest sector data', required=False)
         parser.add_argument('--skipUnzipFiles', action=argparse.BooleanOptionalAction, help='Toggles unzipping of files into the download directory', required=False)
+        parser.add_argument('--specifyCountries', action=argparse._AppendAction, nargs='*', help='When set, only specified countries are downloaded', required=False)
 
         parser.set_defaults(skipDownloadSectors=False)
         parser.set_defaults(skipForestSectorDownload=False)
@@ -33,10 +34,15 @@ class ClimateTraceDataDownloader:
         downloadForest = args.skipForestSectorDownload == False
         downloadNonForest = args.skipNonForestSectorDownload == False
         unzipFilesAfterDownload = args.skipUnzipFiles == False
+        if args.specifyCountries and len(args.specifyCountries) > 0:
+            countries = args.specifyCountries[0]
+            print(f'countries to download :{countries}')
+        else:
+            print(f'configured to download all countries')
 
-        print(f'dl countries:{downloadSectors}')
-        print(f'dl forest sectors:{downloadForest}')
-        print(f'dl non-forest sectors:{downloadNonForest}')
+        print(f'dl international data:{downloadSectors}')
+        print(f'dl national forest sectors:{downloadForest}')
+        print(f'dl national non-forest sectors:{downloadNonForest}')
         print(f'unzip after download:{unzipFilesAfterDownload}')
 
         t = datetime.datetime.now()
@@ -46,22 +52,18 @@ class ClimateTraceDataDownloader:
         forest_dest_path = os.path.join(args.outputPath, 'data_packages', file_name_date_part, 'climate_trace', 'country_packages', 'forest_sectors')
         countries_dest_path = os.path.join(args.outputPath, 'data_packages', file_name_date_part, 'climate_trace', 'sector_packages')
 
-         # limit the number of files downloaded (for testing)
-         # set to -1 or 0 to download all
-        top_n_files_only = -1
-        
         if downloadSectors:
-            self.download_sector_level_data(countries_dest_path, top_n_filesets = top_n_files_only)
+            self.download_sector_level_data(countries_dest_path)
         if unzipFilesAfterDownload:
             self.unzip_files(countries_dest_path)
 
         if downloadNonForest:
-            self.download_country_level_non_forest_data(non_forest_dest_path, top_n_countries = top_n_files_only)
+            self.download_country_level_non_forest_data(non_forest_dest_path)
         if unzipFilesAfterDownload:
             self.unzip_files(non_forest_dest_path)
 
         if downloadForest:
-            self.download_country_level_forest_data(forest_dest_path, top_n_countries = top_n_files_only)
+            self.download_country_level_forest_data(forest_dest_path)
         if unzipFilesAfterDownload:
             self.unzip_files(forest_dest_path)
 
