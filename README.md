@@ -2,6 +2,8 @@
 
 Downloads & unzips all inventory datasets from the ClimateTrace repository: https://climatetrace.org/
 
+Companion app to https://github.com/liamlaverty/climate-trace-data-importer
+
 
 ## Copyright Note 
 
